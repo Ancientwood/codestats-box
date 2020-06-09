@@ -23,7 +23,7 @@ https.get('https://codestats.net/api/users/' + CODESTATS_USER, (resp) => {
 	let res = JSON.parse(data);
 	let level = (LEVEL_FACTOR * Math.sqrt(res.total_xp)).toFixed(2);
 
-	var languages = res.languages;
+	let languages = res.languages;
 	var lang_content = "";
 	Object.keys(languages).forEach(function(key){
 		var xps = languages[key].new_xps;
@@ -33,12 +33,12 @@ https.get('https://codestats.net/api/users/' + CODESTATS_USER, (resp) => {
 				txt = key.split(" ")[0];	
 			}	
 			// TODO:xp level
-			lang_content += txt.padEnd(11) + generateBarChart(languages[key].new_xps / 50, 21) + "5000/"  + languages[key].new_xps + "\n";
+			lang_content += txt.padEnd(11) + generateBarChart((languages[key].new_xps / 50).toFixed(2), 21) + "5000/"  + languages[key].new_xps + "\n";
 		}
 	});
 	let content = 
 			"Level".padEnd(11) + generateBarChart(level,21) + "100/" + level + "\n" + 
-			"Coding".padEnd(11) + generateBarChart(res.new_xp / 50, 21) + "5000/" + res.new_xp + "\n" +
+			"Coding".padEnd(11) + generateBarChart((res.new_xp / 50).toFixed(2), 21) + "5000/" + res.new_xp + "\n" +
 			lang_content +
 			"----------------------------------------" + "\n" +
 			"https://codestats.net/users/" + CODESTATS_USER ;
