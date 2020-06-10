@@ -40,4 +40,4 @@ Gist 中新建名为 `📊 Yesterday Codestats` 的文件，并从 URL 中得到
 
 - 为了不暴露自己的 GitHub Token ，在项目的 `Settings -> Secrets` 中创建两个变量 `TOKEN` 填入 GitHub Token 。  
 
-之后每次 `push` 和每日 00:00 UTC+0 时会触发更新 Gist，如果需要修改触发时机可以调整刚刚的 GitHub Actions 配置文件。
+之后每次 `push` 和每日 18:00 UTC+8 时会触发更新 Gist，如果需要修改触发时机可以调整刚刚的 GitHub Actions 配置文件。
