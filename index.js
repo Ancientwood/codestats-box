@@ -13,7 +13,6 @@ if (!GITHUB_TOKEN || !GIST_ID || !CODESTATS_USER) {
 
 const box = new GistBox({ id:GIST_ID, token:GITHUB_TOKEN});
 const LEVEL_FACTOR = 0.025;
-
 https.get('https://codestats.net/api/users/' + CODESTATS_USER, (resp) => {
   let data = '';
   resp.on('data', (chunk) => {
@@ -21,7 +20,13 @@ https.get('https://codestats.net/api/users/' + CODESTATS_USER, (resp) => {
   });
   resp.on('end', () => {
 	let res = JSON.parse(data);
-	let level = (LEVEL_FACTOR * Math.sqrt(res.total_xp)).toFixed(2);
+	let level = (LEVEL_FACTOR * Math.sqrt(res.total_xp)).toFixed(0);
+
+    let level_1 = level;
+    let level_2 = parseInt(level_1) + 1;
+    let xp_1 = Math.pow(level_1 * 40,2);
+    let xp_2 = Math.pow(level_2 * 40,2);
+    let percent = parseInt((res.total_xp - xp_1) / (xp_2 - xp_1) * 100);
 
 	let languages = res.languages;
 	var lang_content = "";
@@ -37,7 +42,7 @@ https.get('https://codestats.net/api/users/' + CODESTATS_USER, (resp) => {
 		}
 	});
 	let content = 
-			"Level".padEnd(11) + generateBarChart(level,21) + "100/" + level + "\n" + 
+			"Level".padEnd(11) + generateBarChart(percent,21) + "Lv." + level + "/" + percent + "%\n" + 
 			"Coding".padEnd(11) + generateBarChart((res.new_xp / 50).toFixed(2), 21) + "5000/" + res.new_xp + "\n" +
 			lang_content +
 			"----------------------------------------" + "\n" +
