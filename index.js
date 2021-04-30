@@ -19,14 +19,14 @@ https.get('https://codestats.net/api/users/' + CODESTATS_USER, (resp) => {
     data += chunk;
   });
   resp.on('end', () => {
-	let res = JSON.parse(data);
-	let level = (LEVEL_FACTOR * Math.sqrt(res.total_xp)).toFixed(0);
+    let res = JSON.parse(data);
+    let level = Math.floor(LEVEL_FACTOR * Math.sqrt(res.total_xp));
 
     let level_1 = level;
     let level_2 = parseInt(level_1) + 1;
     let xp_1 = Math.pow(level_1 * 40,2);
     let xp_2 = Math.pow(level_2 * 40,2);
-    let percent = parseInt((res.total_xp - xp_1) / (xp_2 - xp_1) * 100);
+    let percent = ((res.total_xp - xp_1) / (xp_2 - xp_1) * 100).toFixed(0);
 
 	let languages = res.languages;
 	var lang_content = "";
